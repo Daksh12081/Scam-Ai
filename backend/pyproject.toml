@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+# Makes "app", "tests", and "experimental" importable as top-level
+# packages regardless of the directory pytest is invoked from, as long as
+# rootdir resolves to this file's directory (backend/).
+pythonpath = ["."]
+testpaths = ["tests", "experimental"]

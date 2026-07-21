@@ -1,0 +1,125 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-04 (pages 23-28)
+scenario_id: SCN-04
+title: Remote Access Technical Support Scam
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: High
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: TECH_SUPPORT
+  - code: REMOTE_ACCESS_REQUEST
+  - code: FEAR_INDUCTION
+  - code: PAYMENT_COACHING
+  - code: URGENCY
+
+plain_language_tactics:
+  - Technical support impersonation
+  - Remote access request
+  - Fear induction
+  - Payment coaching
+  - Urgency
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Hello. I'm calling from Microsoft Security."
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "We've detected malware and suspicious activity on your laptop."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Really?"
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Yes. If we don't fix it immediately, your banking information could be stolen."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What should I do?"
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Please download AnyDesk."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Done."
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Share the access code."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Here it is."
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Now open your banking application."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "I'm checking whether fraud has occurred. Approve the beneficiary shown on your screen."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Done."
+
+language_variants: []   # no Hindi/Arabic variation given for this scenario in the source PDF
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Microsoft Security"
+  FEAR_INDUCTION:
+    - "Your computer is infected"
+  REMOTE_ACCESS_REQUEST:
+    - "Download AnyDesk"
+    - "Download TeamViewer"
+    - "Share your screen"
+    - "Share the access code"
+  PAYMENT_COACHING:
+    - "Open your banking app"
+    - "Approve beneficiary"
+
+false_positive_notes:
+  - >
+    Legitimate support agents: never cold-call about malware; never request
+    banking access; never guide financial transactions; never request
+    AnyDesk to process banking activity.

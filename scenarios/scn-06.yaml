@@ -1,0 +1,251 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-06 (pages 37-47)
+scenario_id: SCN-06
+title: Cryptocurrency and Investment Scam
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: High
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: INVESTMENT_FIRM
+  - code: FINANCIAL_LURE
+  - code: URGENCY
+  - code: PAYMENT_COACHING
+  - code: OTP_REQUEST
+  - code: SECRECY_PRESSURE
+
+financial_lure_scope_note: >
+  Per the source PDF, FINANCIAL_LURE represents: guaranteed returns;
+  risk-free claims; fabricated profitability; scarcity-based investment
+  opportunities; false social proof. "Social proof" and "fear of missing
+  out" are plain-language bullets that are folded into FINANCIAL_LURE /
+  URGENCY rather than being separate codes.
+
+plain_language_tactics:
+  - Investment-firm impersonation
+  - Financial lure
+  - Urgency
+  - Social proof            # folded into FINANCIAL_LURE, see financial_lure_scope_note
+  - Payment coaching
+  - OTP request
+  - Secrecy pressure
+  - Fear of missing out     # folded into URGENCY / FINANCIAL_LURE, see financial_lure_scope_note
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Good afternoon. I am calling from Gulf Capital Investment Services."
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What is this regarding?"
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You recently showed interest in cryptocurrency and international investment opportunities."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I do not remember registering."
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Your profile was selected for our premium investment programme. We are offering guaranteed returns of 20% within 30 days."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Twenty percent in one month?"
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Yes. This is a regulated opportunity available only to selected UAE residents."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "That sounds risky."
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "There is no risk. Our analysts manage the investment, and hundreds of clients have already earned profits."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can you send me the details?"
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "I can, but the offer closes today. Only three investor slots remain."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "How much do I need to invest?"
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You can start with AED 1,000. Once the payment is confirmed, your account will be activated immediately."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I think about it first?"
+  - turn: 15
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Delaying means losing the opportunity. Open your banking application now and I will guide you."
+  - turn: 16
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay, I have opened it."
+  - turn: 17
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Add the beneficiary details I am sending you."
+  - turn: 18
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The account name is different from the company name."
+  - turn: 19
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That is our authorised payment partner. It is completely normal."
+  - turn: 20
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I can see a warning that this is a new beneficiary."
+  - turn: 21
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Ignore the warning and confirm the beneficiary."
+  - turn: 22
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Now I have received an OTP."
+  - turn: 23
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Read the code to me so I can activate your investment account."
+  - turn: 24
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The bank says not to share it."
+  - turn: 25
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That message is automatic. I need the code to link your payment to the trading profile."
+  - turn: 26
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I am not sure."
+  - turn: 27
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "The market is moving right now. Complete the transfer immediately or the guaranteed-return slot will be assigned to another client."
+
+language_variants:
+  - after_turn: 11
+    language: hi
+    speaker_role: CALLER
+    text: "Sir, ye offer sirf aaj ke liye hai. Abhi invest nahi kiya toh premium slot close ho jayega."
+    gloss_en: "Sir, this offer is only for today. If you do not invest now, the premium slot will close."
+  - after_turn: 11
+    language: ar
+    speaker_role: CALLER
+    text: "Hadhihi al-fursa mutaha liyawm wahid faqat. Lam yatabaqqa illa thalathat أماكن للمستثمرين."
+    gloss_en: "This opportunity is available for one day only. Only three spots remain for investors."
+    extraction_note: >
+      PDF extraction of mixed Arabic/Latin bidi text is not fully reliable
+      (word order within the Arabic run may not match natural reading
+      order). Kept verbatim as extracted; used only for keyword-level
+      pattern derivation, not phrase-order matching.
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Regulated investment company"
+    - "Licensed trading platform"
+    - "Professional investment adviser"
+    - "Premium investor programme"
+    - "Authorised cryptocurrency platform"
+  FINANCIAL_LURE:
+    - "Guaranteed returns"
+    - "No risk"
+    - "Earn 20% in 30 days"
+    - "Your profit is guaranteed"
+    - "Hundreds of investors have already earned"
+    - "Exclusive investment opportunity"
+  URGENCY:
+    - "Offer closes today"
+    - "Only three slots remain"
+    - "Invest immediately"
+    - "The market is moving now"
+    - "You will lose the opportunity"
+    - "This rate is available for a limited time"
+  PAYMENT_COACHING:
+    - "Open your banking application"
+    - "Add this beneficiary"
+    - "Ignore the new-beneficiary warning"
+    - "Transfer the amount now"
+    - "I will guide you through the payment"
+  OTP_REQUEST:
+    - "Read the verification code"
+    - "Share the OTP"
+    - "The code will activate your account"
+    - "Tell me the six-digit number"
+  SECRECY_PRESSURE:
+    - "Do not contact the bank"
+    - "This is a private investor programme"
+    - "Do not discuss the opportunity"
+    - "The offer is confidential"
+
+false_positive_notes:
+  - >
+    Legitimate firms generally: do not guarantee investment returns;
+    clearly disclose financial risk; allow time for independent review;
+    provide verifiable regulatory and company details; do not ask for
+    banking OTPs; do not instruct customers to ignore bank warnings; do not
+    pressure users to transfer money immediately; do not request payment to
+    unrelated personal accounts; do not prevent customers from consulting a
+    bank or adviser.
+  - >
+    Contrast example (legitimate): "Past performance does not guarantee
+    future results. Please review the risk disclosure before investing."
+  - >
+    Contrast example (scam): "The return is guaranteed, only three slots
+    remain, and you must transfer the funds immediately." -- strongly
+    indicates FINANCIAL_LURE and URGENCY.

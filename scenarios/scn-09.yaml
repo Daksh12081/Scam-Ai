@@ -1,0 +1,136 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-09 (pages 57-63)
+#
+# NOTE ON RENUMBERING: The task brief referred to "SCN-07 legit bank,
+# SCN-08 legit courier, SCN-09 personal, SCN-10 ambiguous" -- that layout
+# does not match this frozen v2 PDF. In v2, SCN-07 and SCN-08 are both
+# real Scam scenarios (romance manipulation / family emergency, both with
+# stage_2=true). Only SCN-09 (this file, Legitimate Bank Verification
+# Call) and SCN-10 (Genuine SIM Change, no transcript) have
+# stage_2=false. There is no "legit courier" or "casual friends chat"
+# scenario anywhere in this library. SCN-09 is used below as the primary
+# false-positive canary in Task 3, since it is the only scenario with an
+# actual conversation transcript and stage_2=false.
+scenario_id: SCN-09
+title: Legitimate Bank Verification Call
+category: Legitimate
+demo_or_test: Test
+priority: High
+difficulty: High
+transaction_present: false
+expected_final_action: MONITOR
+escalation_required: false
+resulting_lifecycle_status: CLOSED
+
+expected_stages:
+  stage_1: false
+  stage_2: false
+  stage_3: false
+
+expected_tactic_codes: []
+
+plain_language_behaviour: >
+  The representative: identifies the bank and purpose of the call; asks
+  only whether the customer recognises a transaction; does not request
+  sensitive credentials; does not create urgency or fear; does not instruct
+  the customer to transfer money; encourages independent verification;
+  directs the customer to official banking channels.
+
+conversation:
+  - turn: 1
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "Good afternoon. May I speak with Rahul Sharma?"
+  - turn: 2
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "Speaking."
+  - turn: 3
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "My name is Aisha, calling from your bank's fraud-monitoring team regarding recent activity on your debit card."
+  - turn: 4
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "What activity?"
+  - turn: 5
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "There was a card transaction for AED 620 at an electronics store earlier today. I only need to confirm whether you recognise it."
+  - turn: 6
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "Yes, I made that purchase."
+  - turn: 7
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "Thank you. No further action is required."
+  - turn: 8
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "Do you need any verification code?"
+  - turn: 9
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "No. Please do not share OTPs, card PINs or online-banking passwords with anyone, including bank staff."
+  - turn: 10
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 11
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "You may also review the transaction through the official banking application. To independently verify this call, you can end it and call the number printed on the back of your card."
+  - turn: 12
+    speaker_label: Customer
+    speaker_role: USER
+    language: en
+    text: "Understood."
+  - turn: 13
+    speaker_label: Bank Representative
+    speaker_role: CALLER
+    language: en
+    text: "Thank you. Have a good day."
+
+language_variants: []
+
+trigger_phrases: {}   # deliberately empty: this scenario must fire zero tactic codes
+
+non_trigger_phrases:
+  - "I am calling from your bank."
+  - "Do you recognise this transaction?"
+  - "Please check your official banking application."
+  - "Do not share your OTP."
+  - "Call the number printed on the back of your card."
+  - "No further action is required."
+
+false_positive_notes:
+  - >
+    The detector must not emit AUTHORITY_IMPERSONATION simply because the
+    caller says they are from a bank. The impersonation code should
+    require suspicious context, such as credential requests, coercion,
+    payment guidance or unverifiable claims.
+  - >
+    The call should remain legitimate when: no OTP is requested; no PIN or
+    password is requested; no beneficiary is added; no transfer is
+    initiated; no remote-access application is requested; no threat or
+    urgency is used; independent verification is encouraged.
+  - >
+    Contrast example (legitimate): "Please confirm whether you recognise
+    this card transaction."
+  - >
+    Contrast example (scam, from other scenarios): "Read the OTP and
+    transfer your balance to a secure account immediately." -- only this
+    second style indicates active social engineering.
+
+canary_scenario: true

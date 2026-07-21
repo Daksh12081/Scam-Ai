@@ -1,0 +1,119 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-08 (pages 52-57)
+scenario_id: SCN-08
+title: Family / Friend Emergency Impersonation Scam
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: Medium
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: URGENCY
+  - code: FEAR_INDUCTION
+  - code: SECRECY_PRESSURE
+  - code: PAYMENT_COACHING
+
+authority_impersonation_note: >
+  Intentionally NOT AUTHORITY_IMPERSONATION per the source PDF: "This is
+  intentionally not AUTHORITY_IMPERSONATION, since the caller is pretending
+  to be a personal contact rather than an organization." Deliberate design
+  choice, not a gap.
+
+plain_language_tactics:
+  - Identity impersonation   # deliberately not AUTHORITY_IMPERSONATION -- see authority_impersonation_note
+  - Urgency
+  - Fear induction
+  - Secrecy pressure
+  - Payment coaching
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Hi Mom. It's me. I'm messaging from a new number. My phone broke."
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Why are you using another phone?"
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Please don't call my old number. I need help urgently."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What happened?"
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "I had an accident. The hospital needs payment immediately."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Are you okay?"
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Please transfer AED 4,500 now. I'll explain later."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I call Dad?"
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "No! Don't tell anyone yet. Just send the money first."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The beneficiary is new."
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That's the hospital account. Please hurry."
+
+language_variants: []   # no Hindi/Arabic variation given for this scenario in the source PDF
+
+# Source lists these ungrouped ("6. Important Trigger Phrases"). "I'm using
+# a new number." and "My phone broke." are scenario context (identity-risk
+# signal), not imperative/request-shaped tactic triggers -- left unmapped,
+# not wired into any detector pattern.
+trigger_phrases:
+  SECRECY_PRESSURE:
+    - "Don't tell anyone."
+  URGENCY:
+    - "Transfer money now."
+    - "Please hurry."
+  FEAR_INDUCTION:
+    - "Hospital emergency."
+  PAYMENT_COACHING:
+    - "Transfer money now."
+
+unmapped_context_phrases:
+  - "I'm using a new number."
+  - "My phone broke."
+
+false_positive_notes:
+  - >
+    Family emergencies can be genuine. Confidence should increase when new
+    number, secrecy, urgency, payment coaching and new beneficiary appear
+    together.
