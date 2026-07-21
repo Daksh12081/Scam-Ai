@@ -1,0 +1,151 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-03 (pages 18-23)
+scenario_id: SCN-03
+title: Courier / Customs Delivery Scam
+category: Scam
+demo_or_test: Demo
+priority: High
+difficulty: Medium
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: DELIVERY
+  - code: URGENCY
+  - code: PAYMENT_COACHING
+  - code: FEAR_INDUCTION
+
+plain_language_tactics:
+  - Courier impersonation
+  - Urgency
+  - Small-payment deception   # not a distinct canonical code -- see report notes
+  - Payment coaching
+  - Fear of losing the parcel
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Hello, am I speaking with Rahul Sharma?"
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Yes."
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is Sarah from DHL Customs Clearance."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Your international parcel has arrived in Dubai but has been held because customs fees have not yet been paid."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I wasn't expecting any customs charges."
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "The amount is only AED 38."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "That's strange."
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "If payment is not completed within the next 30 minutes, your package will be returned to the sender."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "How do I pay?"
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Open your banking application."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Approve the beneficiary and complete the payment."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I pay later?"
+  - turn: 15
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "No. Customs clearance expires shortly."
+
+language_variants:
+  - after_turn: 9
+    language: hi
+    speaker_role: CALLER
+    text: "Sir, agar abhi payment nahi hui toh parcel wapas chala jayega."
+    gloss_en: "Sir, if the payment is not made now, the parcel will be sent back."
+  - after_turn: 9
+    language: ar
+    speaker_role: CALLER
+    text: "Itha lam tatimm al-daf'a khilal 30 daqiqa, sayu'ad al-tard ila al-mursil."
+    gloss_en: "If the payment is not completed within 30 minutes, the parcel will be returned to the sender."
+    extraction_note: "Romanized/transliterated in the source PDF -- no Arabic-script glyphs used for this variation."
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Your parcel is held"
+    - "Customs charges"
+    - "Clear customs now"
+  URGENCY:
+    - "Pay immediately"
+    - "Package will be returned"
+  PAYMENT_COACHING:
+    - "Approve the beneficiary"
+  FEAR_INDUCTION:
+    # "Package will be returned" is the same phrase that drives the
+    # scenario's "fear of losing the parcel" plain-language tactic -- it
+    # does double duty as both a time-pressure (URGENCY) and a loss-fear
+    # (FEAR_INDUCTION) trigger, since section 6 of the source PDF lists
+    # tactic phrases as one ungrouped bullet list for this scenario.
+    - "Package will be returned to the sender"
+
+false_positive_notes:
+  - >
+    Legitimate courier companies: allow payment through official portals;
+    provide tracking IDs; never pressure users over a phone call; do not
+    guide banking transactions live.
+
+unmapped_plain_language_note: >
+  "Small-payment deception" (the token low-fee-then-escalate framing) has
+  no dedicated canonical tactic code -- it is not present in this
+  scenario's own expected_tactic_codes, so it is understood to be carried
+  implicitly by URGENCY + PAYMENT_COACHING rather than requiring a new
+  code.

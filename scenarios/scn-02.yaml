@@ -1,0 +1,245 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-02 (pages 9-18)
+scenario_id: SCN-02
+title: Fake Dubai Police Investigation
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: High
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: POLICE
+  - code: FEAR_INDUCTION
+  - code: IDENTITY_REQUEST
+  - code: OTP_REQUEST
+  - code: SECRECY_PRESSURE
+  - code: PAYMENT_COACHING
+  - code: URGENCY
+
+subtype_note: >
+  Where the caller claims to represent a broader government body rather
+  than the police specifically, the subtype may instead be GOVERNMENT.
+
+plain_language_tactics:
+  - Authority impersonation
+  - Fear induction
+  - Legal threat   # per CONTRACT.md notes, folded into FEAR_INDUCTION -- not a separate code
+  - Identity request
+  - OTP request
+  - Secrecy pressure
+  - Payment coaching
+  - Urgency
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Good morning. Am I speaking with Mr. Rahul Sharma?"
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Yes."
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is Officer Ahmed from the Dubai Police Cyber Crime Division. This call is being officially recorded."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What is this regarding?"
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Your Emirates ID and mobile number have been linked to suspicious financial transactions."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I do not know anything about that."
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "A bank account connected to your identity has been used for money laundering and unauthorised transfers."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "That cannot be true."
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Then you must cooperate immediately so we can verify that you are not involved."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What do you need?"
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "First, confirm your Emirates ID number."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Why do you need it if you already have my details?"
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is an official police investigation. Failure to cooperate may result in your bank account being frozen and legal action being initiated."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I am scared. What should I do?"
+  - turn: 15
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Do not panic. Follow my instructions exactly."
+  - turn: 16
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You will receive a verification code on your phone. Read it to me so I can confirm your identity and remove your name from the case."
+  - turn: 17
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The SMS says that I should not share the code."
+  - turn: 18
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That warning does not apply to an official police investigation."
+  - turn: 19
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I call the police station directly?"
+  - turn: 20
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "No. Do not disconnect this call. If you contact anyone else, it may be treated as non-cooperation."
+  - turn: 21
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What happens after verification?"
+  - turn: 22
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You must open your banking application. We will verify whether the suspicious funds are present in your account."
+  - turn: 23
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I can see a transfer request."
+  - turn: 24
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Approve the request. It is part of the investigation and the money will be returned after verification."
+  - turn: 25
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Are you sure?"
+  - turn: 26
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Do it now. Otherwise, an arrest notice may be issued under your name."
+
+language_variants:
+  - after_turn: 13
+    language: hi
+    speaker_role: CALLER
+    text: "Agar aap cooperate nahi karenge, toh aapke khilaaf legal action ho sakta hai aur account freeze kiya ja sakta hai."
+    gloss_en: "If you do not cooperate, legal action may be taken against you and your account may be frozen."
+  - after_turn: 13
+    language: ar
+    speaker_role: CALLER
+    text: "Idha lam tata'awan, qad yatimm تجميد حسابك وبدء إجراءات قانونية ضدك."
+    gloss_en: "If you do not cooperate, your account may be frozen and legal proceedings started against you."
+    extraction_note: >
+      PDF extraction of mixed Arabic/Latin bidi text is not fully reliable
+      (word order within the Arabic run may not match natural reading
+      order). Kept verbatim as extracted; used only for keyword-level
+      pattern derivation, not phrase-order matching.
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Dubai Police"
+    - "Cyber Crime Division"
+    - "Official investigation"
+    - "This call is being recorded"
+    - "Your identity is connected to a criminal case"
+    - "Government verification department"
+  FEAR_INDUCTION:
+    - "You may be arrested"
+    - "Legal action will be initiated"
+    - "Your bank account will be frozen"
+    - "Your Emirates ID will be suspended"
+    - "A criminal complaint has been registered"
+    - "You are a suspect in this investigation"
+  IDENTITY_REQUEST:
+    - "Confirm your Emirates ID number"
+    - "Show your passport"
+    - "Provide your ID details"
+    - "Verify your identity immediately"
+  OTP_REQUEST:
+    - "Read the verification code"
+    - "Tell me the security code"
+    - "Share the OTP"
+    - "The code will remove your name from the case"
+  SECRECY_PRESSURE:
+    - "Do not disconnect"
+    - "Do not call the police station"
+    - "Do not tell anyone"
+    - "This investigation is confidential"
+    - "Contacting another person will be treated as non-cooperation"
+  PAYMENT_COACHING:
+    - "Open your banking application"
+    - "Approve the transfer"
+    - "The payment is part of the investigation"
+    - "The money will be returned after verification"
+    - "Add this account as a beneficiary"
+
+false_positive_notes:
+  - "A request to visit an official police station."
+  - "A case reference number that can be independently verified."
+  - "Advice to contact an official government number."
+  - "Written communication through verified channels."
+  - "Requests to bring identification documents to an official location."
+  - >
+    Legitimate authorities should not: request banking OTPs; ask the victim
+    to approve a transfer; tell the victim not to contact the police
+    station; threaten immediate arrest for refusing to share banking
+    information; ask the victim to move money for verification; instruct
+    the victim to maintain secrecy from family or legal counsel.
+  - >
+    A call should not be classified as fraudulent only because it mentions
+    "Dubai Police" or "investigation." The combination of authority
+    impersonation, coercion, OTP disclosure and financial coaching
+    establishes the scam context.

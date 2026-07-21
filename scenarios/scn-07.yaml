@@ -1,0 +1,141 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-07 (pages 46-52)
+scenario_id: SCN-07
+title: Romance / Emotional Manipulation Scam
+category: Scam
+demo_or_test: Demo
+priority: High
+difficulty: High
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: FINANCIAL_LURE
+  - code: URGENCY
+  - code: PAYMENT_COACHING
+
+plain_language_tactics:
+  - Emotional manipulation   # no canonical code -- see unmapped_plain_language_note
+  - Financial lure through trust
+  - Urgency
+  - Payment coaching
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Hi... I'm really sorry to ask this."
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What's wrong?"
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "I'm at Dubai Airport. My wallet has been stolen."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Are you okay?"
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Not really. Immigration won't let me leave unless I pay a security deposit."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can't you call your family?"
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You're the only person I trust. Please don't let me down."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "How much do you need?"
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "AED 2,000. I'll return everything tomorrow."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "That's a lot."
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Please... I'm crying. I don't know who else to ask."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay..."
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Open your banking app. I'll send the beneficiary details."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The bank says it's a new beneficiary."
+  - turn: 15
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Ignore that. Trust me."
+
+language_variants: []   # no Hindi/Arabic variation given for this scenario in the source PDF
+
+# Source lists these ungrouped ("6. Important Trigger Phrases") -- mapped
+# here to canonical codes based on scenario context. NOTE: "Please don't
+# tell anyone" reads as SECRECY_PRESSURE, which is NOT in this scenario's
+# own expected_tactic_codes (FINANCIAL_LURE/URGENCY/PAYMENT_COACHING only)
+# -- flagged as a real inconsistency in the source library, not silently
+# fixed. Under Task 3's "superset allowed, flag extras" rule this is
+# expected to surface as an extra when the detector runs on this scenario.
+trigger_phrases:
+  FINANCIAL_LURE:
+    - "You're the only one I trust."
+  SECRECY_PRESSURE:
+    - "Please don't tell anyone."   # present in source but NOT in expected_tactic_codes -- see note above
+  URGENCY:
+    - "Emergency."
+    - "I need money immediately."
+  PAYMENT_COACHING:
+    - "Transfer it now."
+    - "Ignore the warning."
+
+false_positive_notes:
+  - >
+    Friends and family may genuinely request financial help. The detector
+    should increase confidence only when emotional pressure is immediately
+    followed by payment coaching or suspicious transaction behaviour.
+
+unmapped_plain_language_note: >
+  "Emotional manipulation" / guilt-and-trust exploitation (e.g. "you're the
+  only one I trust", "please don't let me down", "I'm crying") has no
+  dedicated canonical code. It is not FEAR_INDUCTION (no threat/legal
+  fear), not AUTHORITY_IMPERSONATION (no organization is claimed), and the
+  scenario's own expected_tactic_codes does not add a code for it either --
+  it relies on FINANCIAL_LURE ("trust")/URGENCY/PAYMENT_COACHING as
+  proxies. Worth flagging as a possible taxonomy gap if romance-scam
+  coverage becomes a priority.

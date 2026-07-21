@@ -1,0 +1,247 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-05 (pages 28-38)
+scenario_id: SCN-05
+title: Fake Dubai Police Video Verification Scam
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: High
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: POLICE
+  - code: CAMERA_COERCION
+  - code: IDENTITY_REQUEST
+  - code: FEAR_INDUCTION
+  - code: OTP_REQUEST
+  - code: SECRECY_PRESSURE
+  - code: PAYMENT_COACHING
+  - code: URGENCY
+
+subtype_note: >
+  Where the caller claims to represent another government authority
+  instead of the police, the subtype may instead be GOVERNMENT.
+
+plain_language_tactics:
+  - Authority impersonation
+  - Camera coercion
+  - Identity request
+  - Fear induction
+  - OTP request
+  - Secrecy pressure
+  - Payment coaching
+  - Urgency
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Good afternoon. Am I speaking with Rahul Sharma?"
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Yes."
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is Officer Ahmed from the Dubai Police Cyber Crime Department. Please switch on your camera for official identity verification."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Why is video verification required?"
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Your Emirates ID and phone number have been linked to a financial investigation. We must confirm that you are the genuine account holder."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I have not done anything."
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Then cooperate immediately so we can clear your name from the investigation."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What do I need to do?"
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Keep your face visible and hold your Emirates ID in front of the camera."
+  - turn: 10
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I visit the police station instead?"
+  - turn: 11
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "No. This verification must be completed now. If you disconnect, your account may be frozen and further legal action may be initiated."
+  - turn: 12
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I am showing my ID now."
+  - turn: 13
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Move it closer. I need to see the ID number clearly."
+  - turn: 14
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Okay."
+  - turn: 15
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Now turn the card around and show the back side."
+  - turn: 16
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Why do you need both sides?"
+  - turn: 17
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is required under the investigation procedure. Do exactly as instructed."
+  - turn: 18
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You will now receive a verification code on your phone. Read the code to me."
+  - turn: 19
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The message says not to share the code."
+  - turn: 20
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That warning does not apply to an official police verification."
+  - turn: 21
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Can I call Dubai Police directly?"
+  - turn: 22
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Do not contact anyone. This case is confidential, and outside communication may be treated as interference."
+  - turn: 23
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I can see a payment request in my banking application."
+  - turn: 24
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Approve it. The amount will be temporarily secured during the investigation and returned after verification."
+  - turn: 25
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I am not comfortable doing that."
+  - turn: 26
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Approve it immediately, or an arrest notice may be issued under your Emirates ID."
+
+language_variants:
+  - after_turn: 11
+    language: hi
+    speaker_role: CALLER
+    text: "Camera band mat kijiye. Emirates ID camera ke saamne dikhaiye, warna verification fail ho jayega."
+    gloss_en: "Do not turn off the camera. Show your Emirates ID in front of the camera, or verification will fail."
+  - after_turn: 11
+    language: ar
+    speaker_role: CALLER
+    text: "Min fadlak la tughliq al-camera. Arid itmam al-tahaqquq amam al-kamera بطاقة الهوية اإلماراتية أمام الكاميرا إلتمام التحقق."
+    gloss_en: "Please do not turn off the camera. I need to complete verification in front of the camera with the Emirates ID card."
+    extraction_note: >
+      PDF extraction of mixed Arabic/Latin bidi text is not fully reliable
+      (word order within the Arabic run may not match natural reading
+      order). Kept verbatim as extracted; used only for keyword-level
+      pattern derivation, not phrase-order matching.
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Dubai Police Cyber Crime Department"
+    - "Official police verification"
+    - "Government investigation"
+    - "Your Emirates ID is linked to a case"
+    - "This call is being officially recorded"
+  CAMERA_COERCION:
+    - "Switch on your camera"
+    - "Keep your face visible"
+    - "Do not turn off the camera"
+    - "Show your Emirates ID to the camera"
+    - "Move the document closer"
+    - "Show the front and back of the card"
+  IDENTITY_REQUEST:
+    - "Confirm your Emirates ID number"
+    - "Show your passport"
+    - "Display your identification document"
+    - "Read the ID number aloud"
+  FEAR_INDUCTION:
+    - "Your account will be frozen"
+    - "An arrest notice may be issued"
+    - "Legal action will be initiated"
+    - "You will be treated as a suspect"
+  OTP_REQUEST:
+    - "Read the verification code"
+    - "Share the OTP"
+    - "Tell me the six-digit code"
+    - "The code is required to clear your name"
+  SECRECY_PRESSURE:
+    - "Do not contact anyone"
+    - "Do not call the police station"
+    - "This matter is confidential"
+    - "Do not disconnect the video call"
+  PAYMENT_COACHING:
+    - "Open your banking application"
+    - "Approve the payment request"
+    - "Add this beneficiary"
+    - "Transfer the funds for verification"
+    - "The amount will be returned later"
+
+false_positive_notes:
+  - >
+    Legitimate verification generally: occurs within an official
+    application or verified portal; clearly explains why camera access is
+    required; does not involve pressure or legal threats; does not request
+    banking OTPs; does not ask the user to approve a transfer; allows the
+    user to stop and verify through an official channel; does not require
+    secrecy from family, legal counsel or authorities.
+  - >
+    Contrast example (legitimate): "Please scan your Emirates ID through
+    the official application."
+  - >
+    Contrast example (scam): "Keep your camera on, show your Emirates ID
+    and approve a payment immediately or you will be arrested." -- contains
+    coercion, impersonation and financial manipulation together.

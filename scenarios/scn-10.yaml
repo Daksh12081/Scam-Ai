@@ -1,0 +1,71 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-10 (pages 62-69)
+scenario_id: SCN-10
+title: Genuine SIM Change with New Beneficiary
+category: Ambiguous
+demo_or_test: Test
+priority: Critical
+difficulty: High
+language: Not Applicable / Transaction Event
+transaction_present: true
+expected_final_action: STEP_UP_VERIFICATION
+escalation_required: false
+resulting_lifecycle_status: OPEN
+
+# Stage 1 is explicitly Active here (RECENT_SIM_SWAP evidence from the
+# transaction event itself, not from a transcript) -- unlike SCN-01..08
+# where Stage 1 is "optional/supporting."
+expected_stages:
+  stage_1: true
+  stage_2: false
+  stage_3: true
+
+expected_tactic_codes: []
+
+expected_stage_evidence:
+  - RECENT_SIM_SWAP
+  - NEW_BENEFICIARY
+  - DEVICE_UNRECOGNIZED
+
+transaction:
+  amount_minor_units: 300000
+  currency: AED
+  beneficiary:
+    is_new_beneficiary: true
+  device:
+    is_recognized: false
+  channel: MOBILE_BANKING
+
+scenario_event_sequence:
+  - "The customer legitimately requests a replacement SIM from the telecom provider."
+  - "The SIM is successfully activated."
+  - "Several hours later, the customer signs in to mobile banking."
+  - "The customer adds a new beneficiary."
+  - "The customer initiates a transfer of AED 3,000."
+  - "The banking system sends the transaction event to Sentinel."
+  - "No active call or suspicious transcript is present."
+
+# No conversation script exists for this scenario -- it is a pure
+# transaction/CAMARA-evidence event with no transcript to run
+# detect_tactics() over. Trivially expected to produce zero tactic hits.
+conversation: []
+language_variants: []
+trigger_phrases: {}
+
+false_positive_notes:
+  - >
+    A recent SIM swap does not automatically mean that an account has been
+    compromised. Legitimate reasons include: lost or damaged SIM
+    replacement; upgrade from physical SIM to eSIM; telecom-provider
+    migration; device replacement; number-porting activity initiated by
+    the customer.
+  - >
+    A new beneficiary is also common during normal banking activity. The
+    combined evidence requires stronger verification, but without Stage 2,
+    Sentinel must not label the event as an active scam.
+  - >
+    The detector must not invent tactic codes based on transaction risk
+    alone. In particular, must not emit URGENCY, PAYMENT_COACHING,
+    AUTHORITY_IMPERSONATION, OTP_REQUEST or FEAR_INDUCTION from this
+    scenario.
+
+canary_scenario: true

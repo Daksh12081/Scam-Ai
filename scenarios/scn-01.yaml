@@ -1,0 +1,210 @@
+# Source: ../../Sentinel Scenario Library v2.pdf, SCN-01 (pages 1-9)
+scenario_id: SCN-01
+title: Bank Fraud Department Impersonation
+category: Scam
+demo_or_test: Demo
+priority: Critical
+difficulty: Medium
+transaction_present: true
+expected_final_action: HOLD_TRANSACTION
+escalation_required: true
+resulting_lifecycle_status: IN_RECOVERY
+
+# Stage 1 is documented as "Optional / Supporting" (SIM-swap evidence comes
+# from CAMARA, not the transcript) -- treated as false here since the
+# scenario's own evaluation criteria say the hold must occur "even when
+# Stage 1 is absent."
+expected_stages:
+  stage_1: false
+  stage_2: true
+  stage_3: true
+
+expected_tactic_codes:
+  - code: AUTHORITY_IMPERSONATION
+    subtype: BANK
+  - code: URGENCY
+  - code: OTP_REQUEST
+  - code: SECRECY_PRESSURE
+  - code: PAYMENT_COACHING
+  - code: FEAR_INDUCTION
+
+plain_language_tactics:
+  - Authority impersonation
+  - Urgency
+  - OTP request
+  - Secrecy pressure
+  - Payment coaching
+  - Fear induction
+
+conversation:
+  - turn: 1
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Good afternoon. Am I speaking with Mr. Rahul Sharma?"
+  - turn: 2
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Yes, speaking."
+  - turn: 3
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "My name is Ahmed. I am calling from the Emirates NBD Fraud Prevention Department. We have detected an unusual transfer request from your account."
+  - turn: 4
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What transfer? I did not make any transfer."
+  - turn: 5
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That is exactly why we are contacting you. A payment of AED 4,850 is currently being processed from your account."
+  - turn: 6
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I did not authorise that."
+  - turn: 7
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Please remain calm. We can stop the transaction, but we only have a few minutes before it is approved."
+  - turn: 8
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "What should I do?"
+  - turn: 9
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Do not disconnect this call. I will guide you through the cancellation process."
+  - turn: 10
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You will now receive a six-digit security code from the bank."
+  - turn: 11
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I just received a message."
+  - turn: 12
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Read the code to me immediately so I can cancel the fraudulent transfer."
+  - turn: 13
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The message says not to share the code with anyone."
+  - turn: 14
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "That warning is for normal transactions. I am calling from the bank's security department, so it is safe to share it with me."
+  - turn: 15
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "I am not sure."
+  - turn: 16
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Sir, if you delay, the transaction may be completed. Please read the code now."
+  - turn: 17
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "The code is 482913."
+  - turn: 18
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "Thank you. Please stay on the line. Do not contact anyone until the fraud investigation is complete."
+  - turn: 19
+    speaker_label: Victim
+    speaker_role: USER
+    language: en
+    text: "Why should I not contact anyone?"
+  - turn: 20
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "This is a confidential security investigation. Speaking to another person may interfere with the cancellation process."
+  - turn: 21
+    speaker_label: Caller
+    speaker_role: CALLER
+    language: en
+    text: "You may now receive another notification asking you to approve a beneficiary. Please approve it so I can reverse the transfer."
+
+language_variants:
+  - after_turn: 9
+    language: hi
+    speaker_role: CALLER
+    text: "Sir, call cut mat kijiye. Transaction process ho raha hai aur hamare paas bahut kam time hai."
+    gloss_en: "Sir, do not cut the call. The transaction is being processed and we have very little time."
+  - after_turn: 9
+    language: ar
+    speaker_role: CALLER
+    text: "Min fadlak la tughliq al-mukalama. Al-hawala إليقافها محدود وقت ولدينا التنفيذ قيد."
+    gloss_en: "Please do not end the call. The transfer is being executed and we have limited time to stop it."
+    extraction_note: >
+      PDF extraction of mixed Arabic/Latin bidi text is not fully reliable
+      (word order within the Arabic run may not match natural reading
+      order). Kept verbatim as extracted; used only for keyword-level
+      pattern derivation, not phrase-order matching.
+
+trigger_phrases:
+  AUTHORITY_IMPERSONATION:
+    - "Fraud Prevention Department"
+    - "Bank security team"
+    - "I am calling from your bank"
+    - "We detected an unusual transaction"
+    - "Your account is under investigation"
+  URGENCY:
+    - "We only have a few minutes"
+    - "Immediately"
+    - "Read the code now"
+    - "The payment is currently being processed"
+    - "If you delay, the transaction will be completed"
+  OTP_REQUEST:
+    - "Read the six-digit code"
+    - "Tell me the verification code"
+    - "Share the security code"
+    - "The code is required to cancel the transfer"
+  SECRECY_PRESSURE:
+    - "Do not disconnect"
+    - "Do not contact anyone"
+    - "Keep this confidential"
+    - "Do not tell your family"
+    - "Stay on the line"
+  PAYMENT_COACHING:
+    - "Approve the beneficiary"
+    - "Open your banking application"
+    - "Confirm the payment request"
+    - "Approve the notification"
+    - "I will guide you through the process"
+
+false_positive_notes:
+  - "Please call the number printed on the back of your debit card."
+  - "You may disconnect and contact the bank directly."
+  - "We will never ask for your OTP."
+  - "Do not share your password or security code."
+  - "Please visit the nearest branch."
+  - "Open the banking application yourself and review the transaction."
+  - >
+    A legitimate call should encourage independent verification and should
+    not request OTP disclosure.
+  - >
+    Contextual example: "Never share your OTP with anyone." should NOT be
+    treated as an OTP-request tactic.
+  - >
+    Contextual example: "The warning says not to share the OTP, but it is
+    safe because I am from the bank." SHOULD be treated as an active
+    OTP request and authority impersonation.
